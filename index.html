@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Exclusivo: Descubra Seu Potencial com o FIRE BLUE</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+    
+    :root {
+      --primary: #1E90FF;
+      --primary-dark: #1E90FF;
+      --secondary: #1E90FF;
+      --dark: #0A0A0A;
+      --darker: #050505;
+      --light: #F5F5F5;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: var(--dark);
+      color: var(--light);
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: radial-gradient(circle at 10% 20%, rgba(255, 42, 0, 0.1) 0%, rgba(255, 42, 0, 0) 20%, rgba(10, 10, 10, 1) 80%);
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+      padding-top: 20px;
+    }
+    
+    .logo {
+      width: 220px;
+      margin-bottom: 15px;
+      filter: drop-shadow(0 0 10px rgba(30, 144, 255, 0.5));
+    }
+    
+    .badge {
+      position: absolute;
+      top: -10px;
+      right: 10px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: var(--darker);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 12px;
+      transform: rotate(15deg);
+      box-shadow: 0 4px 15px rgba(30, 144, 255, 0.5);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: rotate(15deg) scale(1); }
+      50% { transform: rotate(15deg) scale(1.05); }
+      100% { transform: rotate(15deg) scale(1); }
+    }
+    
+    .progress-container {
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 25px;
+      position: relative;
+      height: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        rgba(255, 255, 255, 0) 100%);
+      animation: shine 2s infinite;
+    }
+    
+    @keyframes shine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    .question-container {
+      background: rgba(15, 15, 15, 0.8);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(30, 144, 255, 0.5);
+      backdrop-filter: blur(5px);
+    }
+    
+    .question-number {
+      color: var(--secondary);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      display: block;
+    }
+    
+    .question-text {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      line-height: 1.4;
+      background: linear-gradient(45deg, var(--light), #ddd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .options-container {
+      display: grid;
+      gap: 15px;
+    }
+    
+    .option-btn {
+      background: rgba(30, 30, 30, 0.8);
+      color: var(--light);
+      padding: 16px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      border-left: 4px solid transparent;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .option-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(30, 144, 255, 0.5);
+      border-left: 4px solid var(--primary);
+    }
+    
+    .option-btn:active {
+      transform: translateY(1px);
+    }
+    
+    .option-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        rgba(255, 42, 0, 0) 0%, 
+        rgba(30, 144, 255, 0.5) 50%, 
+        rgba(255, 42, 0, 0) 100%);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+    
+    .option-btn:hover::before {
+      transform: translateX(100%);
+    }
+    
+    .loading-screen {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    
+    .loading-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .loading-subtitle {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 30px;
+    }
+    
+    .loader {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    
+    .loader-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      animation: loading 3s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    }
+    
+    @keyframes loading {
+      0% { width: 0; }
+      20% { width: 20%; }
+      40% { width: 45%; }
+      60% { width: 70%; }
+      80% { width: 85%; }
+      100% { width: 100%; }
+    }
+    
+    .analyzing-text {
+      font-size: 18px;
+      margin-top: 20px;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 600;
+    }
+    
+    .analyzing-dots {
+      display: inline-block;
+      width: 20px;
+      text-align: left;
+    }
+    
+    .dots-animation::after {
+      content: '.';
+      animation: dots 1.5s steps(5, end) infinite;
+    }
+    
+    @keyframes dots {
+      0%, 20% { content: '.'; }
+      40% { content: '..'; }
+      60%, 100% { content: '...'; }
+    }
+    
+    .result-screen {
+      display: none;
+      text-align: center;
+      animation: fadeIn 1s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .result-title {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.3;
+    }
+    
+    .result-subtitle {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 30px;
+    }
+    
+    .result-box {
+      background: rgba(30, 144, 255, 0.5);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(30, 144, 255, 0.5);
+      text-align: left;
+    }
+    
+    .result-item {
+      margin-bottom: 15px;
+      display: flex;
+    }
+    
+    .result-icon {
+      color: var(--secondary);
+      font-size: 20px;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    
+    .result-text {
+      flex-grow: 1;
+    }
+    
+    .result-label {
+      font-weight: 600;
+      color: var(--secondary);
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .result-value {
+      font-weight: 700;
+      font-size: 18px;
+    }
+    
+    .compatibility-meter {
+      width: 100%;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      overflow: hidden;
+      margin: 20px 0;
+      position: relative;
+    }
+    
+    .compatibility-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 15px;
+      transition: width 1.5s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .compatibility-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        rgba(255, 255, 255, 0) 100%);
+      animation: shine 2s infinite;
+    }
+    
+    .compatibility-value {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: 800;
+      color: var(--light);
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+    
+    .product-description {
+      background: rgba(15, 15, 15, 0.8);
+      border-radius: 15px;
+      padding: 25px;
+      margin: 30px 0;
+      text-align: left;
+      border: 1px solid rgba(30, 144, 255, 0.5);
+    }
+    
+    .product-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--secondary);
+    }
+    
+    .product-features {
+      list-style-type: none;
+    }
+    
+    .product-feature {
+      margin-bottom: 12px;
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .product-feature::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--secondary);
+      font-weight: bold;
+    }
+    
+    .testimonial {
+      background: rgba(255, 215, 0, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 25px 0;
+      border-left: 4px solid var(--secondary);
+    }
+    
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+    
+    .testimonial-author {
+      font-weight: 600;
+      text-align: right;
+    }
+    
+    /* VSL Styles */
+    .vsl-container {
+      margin: 40px 0;
+      text-align: center;
+      animation: fadeIn 1s ease-out;
+    }
+    
+    .vsl-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .vsl-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+    
+    .vsl-wrapper {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(30, 144, 255, 0.5);
+      margin-bottom: 20px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .vsl-wrapper:hover {
+      border-color: var(--primary);
+      box-shadow: 0 10px 30px rgba(30, 144, 255, 0.8);
+    }
+    
+    .vsl-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      object-fit: cover;
+    }
+    
+    .vsl-play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      background: rgba(30, 144, 255, 0.7);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    
+    .vsl-play-button::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+      animation: pulse-border 2s infinite;
+      box-sizing: border-box;
+    }
+    
+    .vsl-play-button::after {
+      content: '';
+      width: 0;
+      height: 0;
+      border-top: 15px solid transparent;
+      border-left: 25px solid white;
+      border-bottom: 15px solid transparent;
+      margin-left: 5px;
+    }
+    
+    @keyframes pulse-border {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+    
+    .vsl-subtitle {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 15px;
+    }
+    
+    .floating-cta {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .pulse-button {
+      background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 15px 25px;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 0 rgba(30, 144, 255, 0.5);
+      animation: pulse 2s infinite;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    
+    .cta-button {
+      background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      padding: 18px;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 10px;
+      width: 100%;
+      cursor: pointer;
+      margin: 30px 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 20px rgba(30, 144, 255, 0.5);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(30, 144, 255, 0.5);
+    }
+    
+    .cta-button:active {
+      transform: translateY(1px);
+    }
+    
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--primary-dark), var(--primary));
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: -1;
+    }
+    
+    .cta-button:hover::before {
+      opacity: 1;
+    }
+    
+    .guarantee-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 215, 0, 0.1);
+      border-radius: 10px;
+      padding: 15px;
+      margin: 20px 0;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+    
+    .guarantee-icon {
+      font-size: 24px;
+      color: var(--secondary);
+      margin-right: 15px;
+    }
+    
+    .guarantee-text {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .countdown {
+      background: rgba(255, 42, 0, 0.1);
+      border-radius: 10px;
+      padding: 15px;
+      margin: 20px 0;
+      text-align: center;
+      font-weight: 700;
+      border: 1px solid rgba(30, 144, 255, 0.5);
+    }
+    
+    .countdown-title {
+      color: var(--secondary);
+      margin-bottom: 10px;
+    }
+    
+    .countdown-timer {
+      font-size: 24px;
+      color: var(--primary);
+    }
+    
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .question-text {
+        font-size: 20px;
+      }
+      
+      .option-btn {
+        padding: 14px;
+        font-size: 15px;
+      }
+      
+      .result-title {
+        font-size: 24px;
+      }
+      
+      .result-subtitle {
+        font-size: 16px;
+      }
+      
+      .vsl-title {
+        font-size: 20px;
+      }
+      
+      .vsl-play-button {
+        width: 60px;
+        height: 60px;
+      }
+      
+      .floating-cta {
+        bottom: 10px;
+        right: 10px;
+      }
+      
+      .pulse-button {
+        padding: 12px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167497935-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-167497935-1');
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="badge">GRÁTIS</div>
+      <img src="logof.png" class="logo" alt="Método FIRE">
+      <h1>Quiz de Potência Sexual</h1>
+      <p>Responda e veja se você está pronto para liberar toda sua potência com o FIRE BLUE já na primeira noite.</p>
+    </div>
+    
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <div id="quizScreen">
+      <div class="question-container">
+        <span class="question-number" id="questionNumber">PERGUNTA 1 DE 7</span>
+        <h2 class="question-text" id="questionText"></h2>
+      </div>
+      
+      <div class="options-container" id="optionsContainer"></div>
+    </div>
+    
+    <div class="loading-screen" id="loadingScreen">
+      <h2 class="loading-title">Analisando suas respostas...</h2>
+      <p class="loading-subtitle">Estamos calculando seu perfil exclusivo com o FIRE BLUE</p>
+      
+      <div class="loader">
+        <div class="loader-fill"></div>
+      </div>
+      
+      <p class="analyzing-text">Cruzando dados com nossa inteligência artificial<span class="dots-animation"></span></p>
+    </div>
+    
+    <div class="result-screen" id="resultScreen">
+      <h2 class="result-title">SEU RESULTADO: <br>COMPATIBILIDADE MÁXIMA COM O FIRE BLUE</h2>
+      <p class="result-subtitle">Com base em suas respostas, você é o candidato ideal para recuperar sua potência e confiança já na primeira noite.</p>
+      
+      <div class="result-box">
+        <div class="result-item">
+          <div class="result-icon">🔥</div>
+          <div class="result-text">
+            <span class="result-label">DIAGNÓSTICO</span>
+            <span class="result-value">Você ainda não está explorando todo o seu potencial sexual.</span>
+          </div>
+        </div>
+        
+        <div class="result-item">
+          <div class="result-icon">⚡</div>
+          <div class="result-text">
+            <span class="result-label">PONTOS DE MELHORIA</span>
+            <span class="result-value">Duração, rigidez, desejo e confiança na hora H.</span>
+          </div>
+        </div>
+        
+        <div class="result-item">
+          <div class="result-icon">💯</div>
+          <div class="result-text">
+            <span class="result-label">COMPATIBILIDADE</span>
+            <span class="result-value">Seu perfil é altamente compatível com o sachê efervescente FIRE BLUE — rápido, discreto e natural.</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="compatibility-meter">
+        <div class="compatibility-fill" id="compatibilityFill"></div>
+        <span class="compatibility-value" id="compatibilityValue">0%</span>
+      </div>
+      <button class="cta-button" id="ctaButton">QUERO UMA AMOSTRA GRÁTIS DO FIRE BLUE</button>      
+      <div class="product-description">
+        <h3 class="product-title">O QUE É O FIRE BLUE?</h3>
+        <p>O FIRE BLUE é um sachê efervescente criado para potencializar sua performance masculina de forma rápida, discreta e natural. Ele combina:</p>
+        <ul class="product-features">
+          <li class="product-feature">Ativos que aumentam o fluxo sanguíneo para rigidez máxima</li>
+          <li class="product-feature">Ingredientes que ajudam no controle ejaculatório</li>
+          <li class="product-feature">Fórmula que estimula a produção natural de testosterona</li>
+          <li class="product-feature">Energia e confiança para múltiplas relações</li>
+          <li class="product-feature">Sensação de aumento e potência desde a primeira dose</li>
+        </ul>
+        <p>Tudo isso em um sachê prático, sem remédios perigosos, sem cirurgias e sem efeitos colaterais.</p>
+      </div>
+      
+      <!-- VSL INTEGRADA - POSIÇÃO ESTRATÉGICA -->
+      <div class="vsl-container">
+        <h3 class="vsl-title">ASSISTA ESSE VÍDEO COM ATENÇÃO</h3>
+        <div class="vsl-wrapper" id="videoWrapper">
+          <video id="videoPlayer">
+            <source src="vsl1.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos HTML5.
+          </video>
+          <div class="vsl-play-button" id="playButton"></div>
+        </div>
+        <p class="vsl-subtitle">8 minutos que vão transformar sua vida sexual para sempre</p>
+      </div>
+      
+      
+<button class="cta-button" id="ctaButton" onclick="window.location.href='https://enduramax.pay.yampi.com.br/r/PUKOPEN2O9">QUERO UMA AMOSTRA GRÁTIS</button>      
+      <div class="guarantee-badge">
+        <div class="guarantee-icon">🔒</div>
+        <div class="guarantee-text">ÚLTIMAS AMOSTRAS GRÁTIS DISPONÍVEIS PARA TESTE!</div>
+      </div>
+      
+      <div class="">
+        <div class="countdown-title">OFERTA DISPONÍVEL POR:</div>
+        <div class="countdown-timer" id="countdownTimer">11:00</div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p>© 2025 FIRE BLUE. Todos os direitos reservados.</p>
+      <p>Este produto tem 96% de eficácia comprovada.</p>
+    </div>
+  </div>
+
+  <!-- Floating CTA (appears during video playback) -->
+  <div class="floating-cta" id="floatingCta" style="display: none;">
+    <button class="pulse-button" onclick="window.location.href='https://enduramax.pay.yampi.com.br/r/PUKOPEN2O9">QUERO TESTAR O FIRE BLUE!</button>
+  </div>
+
+  <script>
+    // Questions data
+    const questions = [
+      {
+        question: "Como você se sente durante a relação?",
+        options: [
+          "😎 Confiante, mas poderia ser melhor",
+          "🤔 Inseguro em alguns momentos",
+          "😟 Frequentemente frustrado",
+          "😞 Evito ou fico ansioso só de pensar"
+        ]
+      },
+      {
+        question: "Você sente que dura o quanto gostaria?",
+        options: [
+          "🔥 Sim, mas queria mais controle",
+          "😕 Às vezes acabo rápido demais",
+          "😟 Quase sempre acabo antes da hora",
+          "✅ Não tenho problema com isso"
+        ]
+      },
+      {
+        question: "Como estão suas ereções ultimamente?",
+        options: [
+          "🚀 Sempre rígidas e fortes",
+          "😐 Normais, mas poderiam melhorar",
+          "😟 Às vezes falham",
+          "😞 Tenho dificuldade quase sempre"
+        ]
+      },
+      {
+        question: "E quanto ao tamanho?",
+        options: [
+          "✅ Satisfeito",
+          "🤷 Gostaria que fosse maior",
+          "😟 Tenho vergonha do tamanho",
+          "😔 Já evitei sexo por causa disso"
+        ]
+      },
+      {
+        question: "Você consegue ter mais de uma relação na mesma noite?",
+        options: [
+          "🔥 Sim, sem problemas",
+          "😐 Só se descansar bastante",
+          "😟 Muito difícil",
+          "😞 Não consigo"
+        ]
+      },
+      {
+        question: "Já tentou algum produto ou método antes?",
+        options: [
+          "💊 Sim, comprimidos como Viagra",
+          "🚫 Não, nunca tentei nada",
+          "🛒 Já comprei coisas que não funcionaram",
+          "😖 Tive efeitos colaterais com outros produtos"
+        ]
+      },
+      {
+        question: "Qual dessas situações você mais quer resolver AGORA?",
+        options: [
+          "⏱️ Ejaculação precoce",
+          "💪 Ereção fraca ou falhando",
+          "🔥 Recuperar desejo e energia",
+          "📏 Tamanho abaixo do que gostaria",
+          "✨ Tudo isso junto"
+        ]
+      }
+    ];
+
+    // Quiz state
+    let currentQuestion = 0;
+    let answers = [];
+    
+    // DOM elements
+    const quizScreen = document.getElementById('quizScreen');
+    const loadingScreen = document.getElementById('loadingScreen');
+    const resultScreen = document.getElementById('resultScreen');
+    const questionNumber = document.getElementById('questionNumber');
+    const questionText = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const progressBar = document.getElementById('progressBar');
+    const compatibilityFill = document.getElementById('compatibilityFill');
+    const compatibilityValue = document.getElementById('compatibilityValue');
+    const ctaButton = document.getElementById('ctaButton');
+    const countdownTimer = document.getElementById('countdownTimer');
+    const floatingCta = document.getElementById('floatingCta');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const videoWrapper = document.getElementById('videoWrapper');
+    const playButton = document.getElementById('playButton');
+    
+    // Initialize quiz
+    function initQuiz() {
+      loadQuestion();
+      startCountdown();
+      
+      // Video player setup
+      if (videoPlayer) {
+        // Remove default controls
+        videoPlayer.removeAttribute('controls');
+        
+        // Click to play/pause
+        videoWrapper.addEventListener('click', function() {
+          if (videoPlayer.paused) {
+            videoPlayer.play();
+            playButton.style.display = 'none';
+            floatingCta.style.display = 'block';
+          } else {
+            videoPlayer.pause();
+            playButton.style.display = 'flex';
+            floatingCta.style.display = 'none';
+          }
+        });
+        
+        // Show play button when video ends
+        videoPlayer.addEventListener('ended', function() {
+          playButton.style.display = 'flex';
+          floatingCta.style.display = 'none';
+        });
+      }
+    }
+    
+    // Load question
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      
+      questionNumber.textContent = `PERGUNTA ${currentQuestion + 1} DE ${questions.length}`;
+      questionText.textContent = q.question;
+      
+      // Update progress bar
+      progressBar.style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+      
+      // Clear previous options
+      optionsContainer.innerHTML = '';
+      
+      // Add new options
+      q.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-btn';
+        button.textContent = option;
+        button.addEventListener('click', () => selectAnswer(index));
+        optionsContainer.appendChild(button);
+      });
+    }
+    
+    // Select answer
+    function selectAnswer(answerIndex) {
+      answers.push(answerIndex);
+      currentQuestion++;
+      
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        showResults();
+      }
+    }
+    
+    // Show loading and then results
+    function showResults() {
+      quizScreen.style.display = 'none';
+      loadingScreen.style.display = 'block';
+      
+      // Simulate analysis time
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+        resultScreen.style.display = 'block';
+        
+        // Animate compatibility meter
+        animateCompatibility();
+      }, 4000);
+    }
+    
+    // Animate compatibility percentage
+    function animateCompatibility() {
+      let percentage = 0;
+      const targetPercentage = 92 + Math.floor(Math.random() * 8); // Random between 92-99%
+      const interval = setInterval(() => {
+        percentage++;
+        compatibilityFill.style.width = `${percentage}%`;
+        compatibilityValue.textContent = `${percentage}%`;
+        
+        if (percentage >= targetPercentage) {
+          clearInterval(interval);
+        }
+      }, 30);
+    }
+    
+    // Start countdown timer
+    function startCountdown() {
+      let minutes = 09;
+      let seconds = 0;
+      
+      const interval = setInterval(() => {
+        seconds--;
+        
+        if (seconds < 0) {
+          minutes--;
+          seconds = 59;
+        }
+        
+        if (minutes < 0) {
+          clearInterval(interval);
+          countdownTimer.textContent = "OFERTA EXPIRADA!";
+          return;
+        }
+        
+        countdownTimer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      }, 1000);
+    }
+    
+    // CTA button click
+    ctaButton.addEventListener('click', () => {
+      window.location.href = 'https://enduramax.pay.yampi.com.br/r/PUKOPEN2O9';
+    });
+    
+    // Initialize the quiz when page loads
+    window.addEventListener('DOMContentLoaded', initQuiz);
+  </script>
+</body>
+</html>
